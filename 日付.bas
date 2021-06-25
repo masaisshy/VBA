@@ -1,4 +1,5 @@
-Attribute VB_Name = "日付"
+Attribute VB_Name = "関数_日付"
+Option Explicit
 Option Explicit
 
 '-----------------------------------------------------
@@ -85,5 +86,40 @@ errMsg:
     
 End Function
 
+'--------------------------------------------------
+'【関数名】changeDate2Serial
+'【引数】dateString  日付を表す文字列　String型
+'【戻り値】日付を表すシリアル値　Long型
+'【エラー】エラーの時は0を返す
+'--------------------------------------------------
+Function changeDate2Serial(ByVal dateString As String) As Long
 
+    On Error GoTo errMsg
+    If IsDate(dateString) Then
+        changeDate2Serial = DateValue(dateString)       'CDate(dateString)
+    Else
+        changeDate2Serial = DateValue(Format(dateString, "####/##/##"))     'CDate(Format(dateString, "####/##/##"))
+    End If
+    
+    Exit Function
+errMsg:
+    changeDate2Serial = 0
+    
+End Function
+
+Sub testdate()
+
+    Dim myDate1 As Long: myDate1 = getDate(21, 3, 29)
+    Dim myWeekday As Boolean: myWeekday = isWorkingday(myDate1)
+    Dim myDateString As String: myDateString = "2021/6/1"
+    
+    Debug.Print myDate1
+    Debug.Print myWeekday
+    Dim myLong As Long: myLong = changeDate2Serial(myDateString)
+    Dim myDate As Date: myDate = changeDate2Serial(myDateString)
+    Debug.Print myLong
+    Debug.Print myDate
+    Stop
+    
+End Sub
 
